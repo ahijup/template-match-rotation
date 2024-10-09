@@ -3,7 +3,9 @@ This project is a proof of concept about how to match a template in an image con
 1. template_match_core.py: core function of matching template
 2. test_ideal.py: Test the matching function on an ideal image to verify the accuracy of the algorithm
 3. test_images.py Test the matching function on a template image at arbitrary angles.
-
+4. polygon_utils.py: provide a function to calculate the area of overlap between two polygons 
+5. rotate_image_util.py: provide a function to rotate an image and obtain the rigid transformation matrix 
+6. subpix_utils.py: provide a function to calculate subpixel-accurate positions via least-squares fitting to a second-degree polynomial 
 
 ### Required package
 ```
