@@ -18,12 +18,12 @@ rotated_template_map, rotated_template_mask_map, rotated_template_vertices_map =
 min_score = 0.9
 max_overlap = 0.1
 
-p_x, p_y, p_a = 640.15, 360.4, 0
+p_x, p_y, p_a = 640.15, 360.4, 0.25
 
 ## 1280*720
 n1, n2, tx, ty = template_match_core.point_point_affine(
             (pattern.shape[1]) / 2, (pattern.shape[0]) / 2, 0,
-            p_x, p_y, math.radians(p_a))
+            p_x, p_y, math.radians(-p_a))
 rot_mat = np.array([[n1, -n2, tx], [n2, n1, ty]], dtype=np.float32)
 test_image = cv2.warpAffine(pattern, rot_mat, (1280, 720), None, cv2.INTER_LINEAR, cv2.BORDER_CONSTANT, 255)  
 

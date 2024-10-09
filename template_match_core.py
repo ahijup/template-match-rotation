@@ -160,8 +160,10 @@ def match_template_rotate(image, rotated_template_map, rotated_template_mask_map
         ncc_loc, ncc_scores = match_template_pixel_mask(image, rotated_template, mask, 1)
         if ncc_scores.max() > min_score:
             ncc_loc = (ncc_loc[0] + tmpl_w / 2, ncc_loc[1] + tmpl_h / 2)
+            x, max_x = least_squared_fitting(np.array([ncc_loc[0] - 1, ncc_loc[0], ncc_loc[0] + 1], dtype=np.float64), ncc_scores[1, :])
+            y, max_y = least_squared_fitting(np.array([ncc_loc[1] - 1, ncc_loc[1], ncc_loc[1] + 1], dtype=np.float64), ncc_scores[:, 1])
             # offset_x, offset_y, max_s, _ = pf.poly_fitting_subpix_offset(ncc_scores)
-            candidate_poses.append((angle, (ncc_loc[0] + 0, ncc_loc[1] + 0), ncc_scores.max()))
+            candidate_poses.append((angle, (x, y), (max_x + max_y) / 2))
             # candidate_poses.append((angle, ncc_loc, ncc_scores.max()))
         #print('Angle:', angle, 'Location:', ncc_loc, 'Score:', ncc_scores.max())
 
@@ -273,7 +275,7 @@ def match_template_refine_subpix(image, template, loc, cur_angle, angle_step = 1
     ncc_scores_l = cv2.matchTemplate(l_image, template, cv2.TM_CCORR_NORMED)
     ncc_scores_r = cv2.matchTemplate(r_image, template, cv2.TM_CCORR_NORMED)
 
-    return find_subpix_3D_peak(loc, cur_angle, angle_step, ncc_scores, ncc_scores_l, ncc_scores_r)
+    return find_subpix_1D_peak(loc, cur_angle, angle_step, ncc_scores, ncc_scores_l, ncc_scores_r)
 
 
 def match_template_refine_iter(image, template, loc, angle, angle_step, max_iter):
