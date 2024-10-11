@@ -11,6 +11,18 @@ def least_squared_fitting(x, y_vals):
     x0 = -a1 / (2 * a0)
     # peak value: a0 * x0 * x0 + a1 * x0 + a2
     max_val = a0 * x0 * x0 + a1 * x0 + a2
+    # fitting boundary check
+    if x0 < x[0] or x0 > x[-1]:
+        if y_vals[0] > y_vals[1] and y_vals[0] > y_vals[2]:
+            x0 = x[0]
+            max_val = y_vals[0]
+        elif y_vals[1] > y_vals[0] and y_vals[1] > y_vals[2]:
+            x0 = x[1]
+            max_val = y_vals[1]
+        else:
+            x0 = x[2]
+            max_val = y_vals[2]
+    
     return x0, max_val
 
 def least_squared_fitting_3D(x, y, t, w):
