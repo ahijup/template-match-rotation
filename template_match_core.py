@@ -206,6 +206,6 @@ def draw_matches(image, tmpl_size, matches):
             cv2.line(image_rgb, 
                     (int(template_vertice[i][0]) , int(template_vertice[i][1])), 
                     (int(template_vertice[(i + 1) % 4][0]), int(template_vertice[(i + 1) % 4][1])), 
-                    (0, 0, 255), 2)
+                    (0, 0, 255), 1, cv2.LINE_AA)
         cv2.putText(image_rgb, f'{score:.2f}', (int(x), int(y)), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
     return image_rgb
